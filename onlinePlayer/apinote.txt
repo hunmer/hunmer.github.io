@@ -1,0 +1,21 @@
+functions.js
+
+initList 初始化播放列表
+loadList 加载播放列表音乐
+clearUserlist 清空用户的同步列表
+
+
+rem.dislist 选中播放列表
+rem.playid 播放中的相对于歌单的索引位置
+
+
+listClick 用户点击歌单的歌曲
+dataBox 跳转到某个界面
+
+
+blurImg 加载背景图
+
+
+加载列表顺序
+
+根据 mkPlayer.defaultlist -> loadList -> 
