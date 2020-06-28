@@ -1,0 +1,47 @@
+<meta charset="utf-8">
+<script src="jquery.min.js"></script>
+<script src="./layui/layui.js"></script>
+<link rel="stylesheet" href="./layui/css/layui.css" media="all">
+<form class="layui-form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+  <div class="layui-form-item">
+    <label class="layui-form-label">搜索内容</label>
+    <div class="layui-input-block">
+      <input type="text" name="url" placeholder="链接/用户id/歌单id" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+    <div class="layui-form-item">
+    <label class="layui-form-label">来源</label>
+    <div class="layui-input-block">
+      <input type="radio" name="source" value="0" title="网易云">
+      <input type="radio" name="source" value="1" title="QQ音乐" checked>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">搜索类型</label>
+    <div class="layui-input-block">
+      <select name="type">
+        <option value="0">歌曲</option>
+        <option value="1">用户</option>
+        <option value="1">歌单</option>
+      </select>
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    layer.msg(JSON.stringify(data.field));
+    return false;
+  });
+});
+</script>
+      

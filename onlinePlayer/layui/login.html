@@ -1,0 +1,48 @@
+<meta charset="utf-8">
+<script src="jquery.min.js"></script>
+<script src="./layui/layui.all.js"></script>
+<link rel="stylesheet" href="./layui/css/layui.css" media="all">
+
+<form class="layui-form" id='login-form'> 
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">账号</label>
+    <div class="layui-input-inline">
+      <input type="text" id="username" placeholder="请输入手机号码或者邮箱" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">密码</label>
+    <div class="layui-input-inline">
+      <input type="password" id="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+    <button type="button" class="layui-btn layui-btn-normal" onclick="login();">登录</button>
+    <button type="button" class="layui-btn layui-btn-warm">取消</button>
+  </div>
+</div>
+</form>
+
+<script>
+//Demo
+// layui.use(['layer', 'form'], function(){
+//   var layer = layui.layer
+//   ,form = layui.form;
+  
+//   layer.msg('Hello World');
+// });
+function login(){
+  alert($('#username').val(), $('#password').val());
+}
+layer.open({
+  type: 1,
+  anim: 3,
+  title: '登录',
+  content: $('#login-form')
+});
+</script>
+      
