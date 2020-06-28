@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MoePIC</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	<link href="./css/viewer.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/floating.css">
+	<link rel="stylesheet" type="text/css" href="css/loading.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" href="css/pushbar.css">
+</head>
+<body>
+	<body class="loading">
+
+		<main>
+		<!-- 侧边栏 -->
+		<link rel="stylesheet" href="css/APlayer.min.css">
+	<div id="aplayer"></div>
+	<script src="js/APlayer.min.js"></script>
+
+		<div id="contactUs">
+	  <div id="countrySelection">
+	    <div id="countrySelection-wrapper">
+	      <ul id="countrySelection-items" style="">
+	        <li class="countrySelection-item active" title="yande" id="control-grid-yande">
+	          <a href="#">yande</a>
+	        </li>
+	        <li class="countrySelection-item" title="konachan" id="control-grid-konachan">
+	          <a href="#">konachan</a>
+	        </li>
+	        <li class="countrySelection-item" title="danbooru" id="control-grid-danbooru">
+	          <a href="#">danbooru</a>
+	        </li>
+	        <li class="countrySelection-item" title="behoimi" id="control-grid-behoimi">
+	          <a href="#">behoimi</a>
+	        </li>
+	        <li class="countrySelection-item" title="safebooru" id="control-grid-safebooru" >
+	          <a href="#">safebooru</a>
+	        </li>
+	        <li class="countrySelection-item" title="lolibooru" id="control-grid-lolibooru">
+	          <a href="#">lolibooru</a>
+	        </li>
+	        <li class="countrySelection-item" title="gelbooru" id="control-grid-gelbooru">
+	          <a href="#">gelbooru</a>
+	        </li>
+	        <li class="countrySelection-item" title="worldcosplay" id="control-grid-worldcosplay">
+	          <a href="#">worldcosplay</a>
+	        </li>
+	        <li class="countrySelection-item" title="kawaiinyan" id="control-grid-kawaiinyan">
+	          <a href="#">kawaiinyan</a>
+	        </li>
+	        <li class="countrySelection-item" title="bilibili" id="control-grid-bilibili">
+	          <a href="#">bilibili</a>
+	        </li>
+	         <li class="countrySelection-item" title="sankakucomplex" id="control-grid-sankakucomplex">
+	          <a href="#">sankakucomplex</a>
+	        </li>
+	         <li class="countrySelection-item" title="anime_picture" id="control-grid-anime_picture">
+	          <a href="#">anime_picture</a>
+	        </li>
+	         <li class="countrySelection-item" title="zerochan" id="control-grid-zerochan">
+	          <a href="#">zerochan</a>
+	        </li>
+	         <li class="countrySelection-item" title="shuushuu" id="control-grid-shuushuu">
+	          <a href="#">shuushuu</a>
+	        </li>
+	         <li class="countrySelection-item" title="minitokyo" id="control-grid-minitokyo">
+	          <a href="#">minitokyo</a>
+	        </li>
+	         <li class="countrySelection-item" title="e926" id="control-grid-e926">
+	          <a href="#">e926</a>
+	        </li>
+	         <li class="countrySelection-item" title="e621" id="control-grid-e621">
+	          <a href="#">e621</a>
+	        </li>
+	         <li class="countrySelection-item" title="hypnohub" id="control-grid-hypnohub">
+	          <a href="#">hypnohub</a>
+	        </li>
+	         <li class="countrySelection-item" title="rule34" id="control-grid-rule34">
+	          <a href="#">rule34</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </div>
+	</div>
+
+			<div class="content content--center" id='host_layout'>
+				<div class="grid grid--type-yande" title='yande'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-konachan" title='konachan'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-safebooru" title='safebooru'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-danbooru" title='danbooru'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-behoimi" title='behoimi'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-gelbooru" title='gelbooru'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-worldcosplay" title='worldcosplay'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-kawaiinyan" title='kawaiinyan'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-bilibili" title='bilibili'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-lolibooru" title='lolibooru'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-sankakucomplex" title='sankakucomplex'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-anime_picture" title='anime_picture'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-shuushuu" title='shuushuu'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-minitokyo" title='minitokyo'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-e926" title='e926'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-e621" title='e621'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-hypnohub" title='hypnohub'>
+					<div class="grid__sizer"></div>
+				</div>
+				<div class="grid grid--type-rule34" title='rule34'>
+					<div class="grid__sizer"></div>
+				</div>
+			</div>
+		</main>
+	<div class="loader1">
+    	<i></i><i></i>
+  	</div>
+
+
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu_cornermorph.css" />
+
+	<script type='text/javascript' src='./js/jquery.min.js'></script>
+	<script type='text/javascript' src='./js/var.js'></script>
+
+	<script type="text/javascript" src='js/api.js'></script>
+	<script src="./js/viewer.js"></script>
+	<script type="text/javascript" src='js/test.js'></script>
+	
+	<script src="js/imagesloaded.pkgd.min.js"></script>
+	<script src="js/masonry.pkgd.min.js"></script>
+	<script src="js/anime.min.js"></script>
+	<script src="js/blooming-menu.min.js"></script>
+	<script src="js/floating.js"></script>
+	<script src='js/jquery-ui.min.js'></script>
+	<script src='js/index.js'></script>	
+	<script src="js/background-blur.min.js"></script>    
+
+
+	<link rel="stylesheet" href="css/x0popup.min.css">
+	<script src="js/x0popup.min.js"></script>   
+
+	<link rel="stylesheet" href="css/optiscroll.css">
+	<script src="js/jquery.optiscroll.min.js"></script>  
+
+	<script type="text/javascript" src='js/host.js'></script>
+	<script src="js/main.js"></script>
+	
+
+	<script type="text/javascript">
+		var g_v_musics = [];
+		var g_v_ap;
+		$(function() {
+
+			 $.get(g_v_api+'/musicAPI.php?types=playlist&id=2417384697&aplayer=true', function(data) {
+			 	g_v_musics = data;
+			 	g_v_ap.list.add(data);
+			});
+
+			g_v_ap = new APlayer({
+			    container: document.getElementById('aplayer'),
+			    mini: true,
+			    lrcType: 3
+			});
+			var scrolldom = $('body').optiscroll({
+				checkFrequency: true,
+				forceScrollbars: true
+			});
+			scrolldom.on('scrollreachbottom', function (ev) {
+				if(!g_b_loading){
+		    		nextPage();
+		    	}
+			});  
+
+			setHost(g_a_log.lastHost,'post', true);
+			var g_v_grid_down = {
+				start: 0,
+				task: -1,
+				element: null,
+				holding: false
+			};
+
+			window.history.pushState(null, null, "#");
+		     window.addEventListener("popstate", function(event) {
+		        window.history.pushState(null, null, "#");
+		        event.preventDefault(true);
+				event.stopPropagation();
+				if(g_v_gallery_info.open){
+					g_v_gallery_info.gallery.hide();
+				}
+		     })
+
+			$('body')
+			.on('touchstart', '.aplayer', function(event) {
+				_window_close();
+				var dom = $(this);
+				g_v_grid_down.start = getNow();
+				g_v_grid_down.task = window.setTimeout(function(){
+					if(g_v_grid_down.start > 0){
+						g_v_grid_down.holding = true;
+						if(g_v_ap.mode == 'mini'){
+							g_v_ap.setMode('normal')
+						}else{
+							g_v_ap.setMode('mini')
+						}
+					}
+					g_v_grid_down.start = 0;
+					g_v_grid_down.task = -1;
+					event.preventDefault(true);
+					event.stopPropagation();
+				}, 1000);
+			})
+			.on('touchend', '.aplayer', function(event) {
+				if(g_v_grid_down.task != -1){
+					window.clearTimeout(g_v_grid_down.task);
+				}
+				g_v_grid_down.start = 0;
+				if(g_v_grid_down.holding){
+					event.preventDefault(true);
+					event.stopPropagation();
+				}
+				g_v_grid_down.holding = false;
+			})
+			.on('click', 'a', function(event){
+				var dom = $(event.target);
+				var s_name = dom.attr('action_name');
+				console.log(s_name);
+				switch(s_name){
+					case 'close':
+						_window_close();
+						break;
+				}
+				console.log(event.target);
+			})
+			.on('click', '.grid__img', function(event) {
+				loadGallery($(this));
+			})
+			.on('touchstart', '.grid__img', function(event) {
+				_window_close();
+
+				var dom = $(this);
+				g_v_grid_down.start = getNow();
+				g_v_grid_down.task = window.setTimeout(function(){
+					if(g_v_grid_down.start > 0){
+						console.log('长按');
+						g_v_grid_down.holding = true;
+						var json = getPicJson(dom.parent().attr('data-host'), dom.parent().attr('data-id-index'));
+						console.log(json);
+						if(json != undefined){
+							_window_picInfo(json);
+						}
+					}
+					g_v_grid_down.start = 0;
+					g_v_grid_down.task = -1;
+					event.preventDefault(true);
+					event.stopPropagation();
+				}, 1000);
+			})
+			.on('touchend', '.grid__img', function(event) {
+				if(g_v_grid_down.task != -1){
+					window.clearTimeout(g_v_grid_down.task);
+				}
+				g_v_grid_down.start = 0;
+				if(g_v_grid_down.holding){
+					console.log('长按弹起');
+					event.preventDefault(true);
+					event.stopPropagation();
+				}
+				g_v_grid_down.holding = false;
+			});
+		});
+
+		function setLoading(b_loading){
+			$('.loader1').toggle(b_loading);
+		}
+
+</script>
+</body>
+</html>

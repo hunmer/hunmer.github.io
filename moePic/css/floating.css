@@ -1,0 +1,122 @@
+ body .blooming-menu-right_container {
+  z-index: 99999;
+}
+
+.blooming-menu-right_item:nth-of-type(1) .blooming-menu-right_item-btn {
+  background-image: url(../img/get-app.svg);
+  background-size: 35%;
+}
+
+.blooming-menu-right_item:nth-of-type(2) .blooming-menu-right_item-btn {
+  background-image: url(../img/grade.svg);
+}
+
+.blooming-menu-right_item:nth-of-type(3) .blooming-menu-right_item-btn {
+  background-image: url(../img/home.svg);
+}
+
+.blooming-menu-right_item:nth-of-type(4) .blooming-menu-right_item-btn {
+  background-image: url(../img/lock.svg);
+  background-size: 35%;
+}
+
+
+.fm button[class$="item-btn"] {
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,.2);
+  opacity: 1;
+}
+
+.center-menu {
+  width: 50px;
+  top: calc(100% - 100px);
+  left: 50%;
+  z-index: 99999;
+  position: fixed !important;
+}
+
+.right-menu {
+  width: 100px;
+  left: calc(90% - 10px);
+  top: 94% !important;
+  z-index: 99999;
+  position: fixed !important;
+}
+
+.up-menu {
+  width: 100px;
+  left: calc(90% - 10px);
+  top: 70% !important;
+  z-index: 99999;
+  position: fixed !important;
+}
+
+
+
+.blooming-menu-up_item:nth-of-type(1) .blooming-menu-up_item-btn {
+  background-image: url(../svg/paint.svg);
+}
+
+.blooming-menu-up_item:nth-of-type(2) .blooming-menu-up_item-btn {
+  background-image: url(../svg/favorite.svg);
+}
+
+.blooming-menu-up_item:nth-of-type(3) .blooming-menu-up_item-btn {
+  background-image: url(../svg/share.svg);
+}
+
+.blooming-menu-up_item:nth-of-type(4) .blooming-menu-up_item-btn {
+  background-image: url(../svg/delete.svg);
+}
+
+.blooming-menu-up_item:nth-of-type(5) .blooming-menu-up_item-btn {
+  background-image: url(../svg/do.svg);
+}
+
+.blooming-menu-up_item:nth-of-type(6) .blooming-menu-up_item-btn {
+  background-image: url(../svg/info.svg);
+}
+
+.blooming-menu-up_main {
+   /* background-image: url(../svg/hand.svg);
+    background-size: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;*/
+}
+
+.blooming-menu-up_main-content{
+  color: blue;
+}
+
+.blooming-menu-center_main {
+    background-image: url(../svg/home.svg);
+    background-size: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.blooming-menu-center_item:nth-of-type(1) .blooming-menu-center_item-btn {
+  background-image: url(../svg/child.svg);
+}
+.blooming-menu-center_item:nth-of-type(2) .blooming-menu-center_item-btn {
+  background-image: url(../svg/favorite_list.svg);
+}
+.blooming-menu-center_item:nth-of-type(3) .blooming-menu-center_item-btn {
+  background-image: url(../svg/setting.svg);
+}
+.blooming-menu-center_item:nth-of-type(4) .blooming-menu-center_item-btn {
+  background-image: url(../svg/history.svg);
+}
+.blooming-menu-center_item:nth-of-type(5) .blooming-menu-center_item-btn {
+  background-image: url(../svg/box.svg);
+}
+.blooming-menu-center_item:nth-of-type(6) .blooming-menu-center_item-btn {
+  background-image: url(../svg/calendar.svg);
+}
+
+.blooming-menu-center_item:nth-of-type(7) .blooming-menu-center_item-btn {
+  background-image: url(../svg/recommand.svg);
+}
+.blooming-menu-center_item:nth-of-type(8) .blooming-menu-center_item-btn {
+  background-image: url(../svg/user.svg);
+}
+
+
