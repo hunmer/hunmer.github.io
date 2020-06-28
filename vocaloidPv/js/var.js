@@ -302,7 +302,7 @@ function randomNum(minNum,maxNum){
 
 var g_config = local_readJson('config', {
   'index': 1,
-  'playMode': 0, // iframe播放
+  'playMode': 1, // iframe播放
 });
 //$('#selecter_mode li:eq('+g_config.playMode+1+')').addClass('selected');
 // 播放器本地存储信息
