@@ -186,7 +186,7 @@ function getData(host, s_url, load = false){
 
 function getImageUrl(host, url, orgin = 'prev'){
 	//if(g_v_imglist[host][orgin] != undefined && g_v_imglist[host][orgin]){
-		return './image.php?url='+btoa(url)+'&proxy=true';
+		return g_v_api+'/image.php?url='+btoa(url)+'&proxy=true';
 	//}
 	return url;
 }
