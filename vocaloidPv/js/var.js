@@ -193,7 +193,7 @@ function loadIndex(dom){
     if(g_config.playMode === 2){
 
     }
-    $('.video-container').hide();
+
     dom = $('#videoBox video').show()[0];
     $('#videoBox iframe').remove();
     dom.poster = json.thumbUrl;
