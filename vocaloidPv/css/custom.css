@@ -1,0 +1,73 @@
+.not-active {
+    color: #dedbc3;
+}
+
+.rotate {
+    animation: rotate 6s linear infinite;
+}
+
+@keyframes rotate{
+    0%{
+        transform: rotateZ(0deg);/*从0度开始*/
+    }
+    100%{
+        transform: rotateZ(360deg);/*360度结束*/
+    }
+}
+
+.card .card-title {
+    font-size: 13px !important;
+    padding: 35px !important;
+}
+
+.floatTag {
+    margin-top: 6px;
+    z-index: 3;
+    position: absolute;
+    margin-left: 8px !important;
+}
+
+.collection-item.avatar .chip{
+    height: 20px;
+    font-size: 8px;
+    line-height: 20px;
+    padding: 0 10px;
+    margin-bottom: 5px;
+    margin-right: 4px;
+}
+
+.logo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 20px !important;
+    width: 75%;
+}
+
+.playing {
+    background-color: #e65555 !important;
+    color: white;
+}
+
+#videoBox {
+    background-image: url(../images/office.jpg);
+    background-size: cover;
+    transition: .5s
+}
+
+#videoBox.in {
+    animation: ac 1s
+}
+
+#videoBox.out {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    z-index: 999;
+    animation: an .5s
+}
+
+.collection-item.avatar p {
+    font-size: 12px;
+}

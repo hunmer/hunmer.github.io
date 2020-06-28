@@ -1,0 +1,170 @@
+ <html>
+    <head>
+      <link href="font/icon.css" rel="stylesheet">
+      <meta charset="utf-8">
+      <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/custom.css"  media="screen,projection"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head> 
+<body>
+
+    <nav class="nav-extended">
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo logo">Logo</a>
+      <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <a href="#" onclick="openSearch();" class="sidenav-trigger right"><i class="material-icons">search</i></a>
+
+   
+    </div>
+    <div class="nav-content">
+      <ul class="tabs tabs-transparent">
+        <li class="tab"><a class="active" href="#test1">正在播放</a></li>
+        <li class="tab"><a href="#test2">最新曲子</a></li>
+        <li class="tab"><a href="#test3">我的收藏</a></li>
+
+        <!-- <li class="tab"><a href="#test4">Test 4</a></li> -->
+      </ul>
+    </div>
+
+  </nav>
+
+
+  <!-- (弹窗)底部播放列表 -->
+  <div id="modal1" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+   <!-- (弹窗)页数选择器 -->
+  <div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">取消</a>
+    </div>
+  </div>
+
+<!-- 侧边栏开始 -->  
+ <ul id="slide-out" class="sidenav">
+    <li><div class="user-view">
+      <div class="background">
+        <img src="images/office.jpg">
+      </div>
+       <a class='dropdown-trigger right' href='#' data-target='dropdown1'><i class="material-icons">settings</i></a>
+      <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+        <!-- Dropdown Trigger -->
+     
+      <a href="#name"><span class="white-text name">John Doe</span></a>
+      <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+    </div></li>
+
+    <ul class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header">
+      <i class="material-icons">code</i>
+      HTML5
+      <span class="badge">32</span></div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header">
+      <i class="material-icons">computer</i>
+      CSS3
+      <span class="badge">19</span></div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+  <li>
+    <div class="collapsible-header">
+      <i class="material-icons">dialpad</i>
+      Materialize CSS
+      <span class="new badge">30</span></div>
+    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+  </li>
+</ul>
+
+
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li><div class="divider"></div></li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+
+    <li><div class="divider"></div></li>
+      <div class="input-field col s12" id='selecter_mode'>
+        <select>
+          <option value="" disabled selected>选择播放模式</option>
+          <option value="源地址播放">源地址播放(需要手动播放和切曲)</option>
+          <option value="视频播放">视频播放(加载比较缓慢)</option>
+        <!--   <option value="音频播放">音频播放(流量占用小)</option> -->
+        </select>
+        <label>Materialize Select</label>
+     </div>
+
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="#!">one</a></li>
+    <li><a href="#!">two</a></li>
+    <li class="divider" tabindex="-1"></li>
+    <li><a href="#!">three</a></li>
+    <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+  </ul>
+  </ul>
+<!-- 侧边栏结束 -->
+  <nav id='search' style="display: none">
+    <div class="nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input id="search" type="search" required>
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons" onclick="closeSearch();">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <div id="test1" class="col s12">
+
+  <div class="fixed-action-btn click-to-toggle" id='floatingMenu'>
+  <a id='cover_btn' class="btn-floating btn-large red" style="background-size: cover;
+    background-image: url(images/user.jpg);">
+  </a>
+  <ul>
+    <li><a class="btn-floating red"><i class="material-icons">keyboard_arrow_up</i></a></li>
+    <li><a class="btn-floating yellow darken-1"><i class="material-icons">search</i></a></li>
+    <li><a class="btn-floating green"><i class="material-icons">public</i></a></li>
+    <li><a class="btn-floating blue"><i class="material-icons">get_app</i></a></li>
+  </ul>
+</div>
+      
+   <div id='videoBox'>
+      <div class="video-container"> </div>
+      <video class="responsive-video" style="display: none;" controls width="100%" height="auto" poster="" src="">您的浏览器不支持 video 标签。
+      </video>
+   </div>
+      <!-- 播放列表 -->
+  	 <ul class="collection with-header">
+      <li class="collection-header"><h4>Playlist</h4></li> 
+     </ul>
+  </div>
+	<div id="test2" class="col s12">
+
+    <div class="row" style="margin: 3px;">
+     
+    </div>
+
+  </div>
+	<div id="test3" class="col s12">Test 3</div>
+	<!-- <div id="test4" class="col s12">Test 4</div> -->
+      <script type="text/javascript" src="js/jquery.min.js"></script>
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script type="text/javascript" src='js/var.js'></script>
+      <script type="text/javascript" src='js/index.js'></script>
+      <script type="text/javascript" src='js/flv.min.js'></script>
+    </body>
+  </html>
