@@ -2,8 +2,44 @@
     color: #dedbc3;
 }
 
+._shadow_1 {
+    text-shadow: -1px -1px 6px #000000, 1px 1px 6px #000000, -1px 1px 6px #E702E9, 1px -1px 6px #fcf2fc;
+}
+
+.slider_text {
+    background-color: #0000003b;
+    vertical-align: baseline;
+    font-size: 19px;
+    margin-left: 10px;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mr {
+    margin-right: 15px;
+}
+
+#song_name {
+    background-color: #0000004f;
+}
+
+#song_artist {
+    background-color: #0000004f;
+}
+
+
 .rotate {
     animation: rotate 6s linear infinite;
+}
+
+.block {
+    display: block;
+}
+
+.nowarp {
+    white-space: nowrap;
 }
 
 @keyframes rotate{
@@ -50,7 +86,7 @@
 }
 
 #videoBox {
-    background-image: url(../images/office.jpg);
+    /*background-image: url(../images/office.jpg);*/
     background-size: cover;
     transition: .5s
 }
