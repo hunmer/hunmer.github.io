@@ -2,7 +2,7 @@ $(function() {
        $('.sidenav').sidenav();
        $('.collapsible').collapsible({
         onOpenStart: function(dom){
-          console.log(dom);
+          switch(dom.id){
             case 'history':
               openHistory();
               break;
