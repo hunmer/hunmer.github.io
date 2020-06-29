@@ -10,23 +10,37 @@
 
     <nav class="nav-extended">
     <div class="nav-wrapper">
-      <a href="#" class="brand-logo logo">Logo</a>
+      <a href="#" class="brand-logo logo">VocaloidPv</a>
       <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <a href="#" onclick="openSearch();" class="sidenav-trigger right"><i class="material-icons">search</i></a>
-
-   
+      <a href="#" onclick="openSearch();" class="right mr"><i class="material-icons">search</i></a>
     </div>
     <div class="nav-content">
       <ul class="tabs tabs-transparent">
         <li class="tab"><a class="active" href="#test1">正在播放</a></li>
-        <li class="tab"><a href="#test2">最新曲子</a></li>
-        <li class="tab"><a href="#test3">我的收藏</a></li>
+        <li class="tab"><a href="#test2">我的收藏</a></li>
+        <!-- <li class="tab"><a href="#test3">最新曲子</a></li> -->
 
         <!-- <li class="tab"><a href="#test4">Test 4</a></li> -->
       </ul>
     </div>
 
   </nav>
+
+  <!-- 搜索界面 -->
+    <nav id='search' style="display: none;height: 100%;background-color: white;">
+    <div class="nav-wrapper">
+      <form style="margin-bottom: 0px !important;height: 8%">
+        <div class="input-field">
+          <input id="search" type="search" oninput='searchByKeyword();' required>
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons" onclick="closeSearch();">close</i>
+        </div>
+      </form>
+      <ul class="collection" style="margin-top: 0px !important;border: 0px !important;">
+     </ul>
+    </div>
+  </nav>
+
 
 
   <!-- (弹窗)底部播放列表 -->
@@ -53,25 +67,28 @@
  <ul id="slide-out" class="sidenav">
     <li><div class="user-view">
       <div class="background">
-        <img src="images/office.jpg">
+        <img src="images/slide-background.jpg" style="opacity: 0.6;width: 100%">
       </div>
        <a class='dropdown-trigger right' href='#' data-target='dropdown1'><i class="material-icons">settings</i></a>
-      <a href="#user"><img class="circle" src="images/yuna.jpg"></a>
+      <a href="#user"><img class="circle" id='song_cover' src="images/user.jpg"></a>
         <!-- Dropdown Trigger -->
-     
-      <a href="#name"><span class="white-text name">John Doe</span></a>
-      <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+     <i class="material-icons" style="font-size: 19px">music_note</i><span id='song_name' class='slider_text'>xx</span></a></br>
+     <i class="material-icons" style="font-size: 19px">face</i><span id='song_artist' class='slider_text'>xx</span></a>
+     <!--  <a href="#name"><span id='song_name'>xxx</span></a></br>
+      <a href="#email"><span id='song_artist'>xxx<</span></a> -->
     </div></li>
 
     <ul class="collapsible" data-collapsible="accordion">
-  <li>
+  <li id='history'>
     <div class="collapsible-header">
-      <i class="material-icons">code</i>
-      HTML5
-      <span class="badge">32</span></div>
-    <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+      <i class="material-icons">history</i>
+      History
+      <span class="badge">0</span></div>
+    <div class="collapsible-body">
+      <ul class="collection" style="margin-top: 0px !important;border: 0px !important;">
+    </div>
   </li>
-  <li>
+  <!-- <li>
     <div class="collapsible-header">
       <i class="material-icons">computer</i>
       CSS3
@@ -84,16 +101,12 @@
       Materialize CSS
       <span class="new badge">30</span></div>
     <div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
-  </li>
+  </li> -->
 </ul>
 
 
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-
+   <!--  <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li> -->
     <li><div class="divider"></div></li>
       <div class="input-field col s12" id='selecter_mode'>
         <select>
@@ -102,7 +115,7 @@
           <option value="视频播放">视频播放(加载比较缓慢)</option>
         <!--   <option value="音频播放">音频播放(流量占用小)</option> -->
         </select>
-        <label>Materialize Select</label>
+        <!-- <label>Materialize Select</label> -->
      </div>
 
   <!-- Dropdown Structure -->
@@ -116,19 +129,8 @@
   </ul>
   </ul>
 <!-- 侧边栏结束 -->
-  <nav id='search' style="display: none">
-    <div class="nav-wrapper">
-      <form>
-        <div class="input-field">
-          <input id="search" type="search" required>
-          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-          <i class="material-icons" onclick="closeSearch();">close</i>
-        </div>
-      </form>
-    </div>
-  </nav>
 
-  <div id="test1" class="col s12">
+  <div class='_content' id="test1" class="col s12">
 
   <div class="fixed-action-btn click-to-toggle" id='floatingMenu'>
   <a id='cover_btn' class="btn-floating btn-large red" style="background-size: cover;
@@ -148,23 +150,27 @@
       </video>
    </div>
       <!-- 播放列表 -->
-  	 <ul class="collection with-header">
+  	 <ul class="collection with-header" id='list' style="margin-top: 0px;">
       <li class="collection-header"><h4>Playlist</h4></li> 
      </ul>
   </div>
-	<div id="test2" class="col s12">
+	<div class='_content' id="test2" class="col s12">
 
     <div class="row" style="margin: 3px;">
-     
     </div>
 
   </div>
-	<div id="test3" class="col s12">Test 3</div>
+	<!-- <div class='_content' id="test3" class="col s12">Test 3</div> -->
 	<!-- <div id="test4" class="col s12">Test 4</div> -->
+  <script type="text/javascript">
+    
+  </script>
       <script type="text/javascript" src="js/jquery.min.js"></script>
+      <script type="text/javascript" src="js/until.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
-      <script type="text/javascript" src='js/var.js'></script>
+      <script type="text/javascript" src="js/lazyload.min.js"></script>
       <script type="text/javascript" src='js/index.js'></script>
+      <script type="text/javascript" src='js/var.js'></script>
       <script type="text/javascript" src='js/flv.min.js'></script>
     </body>
   </html>
