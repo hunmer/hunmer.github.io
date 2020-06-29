@@ -143,7 +143,6 @@ function initColl(coll = ''){
   var pic, last, lastName;
   for(var i in g_a_coll){
     if(coll != '' && i != coll) continue;
-
     last =  g_a_coll[i].lastPlay;
     if(last === null){
       //lastName = '';
@@ -171,11 +170,12 @@ function initColl(coll = ''){
 
   }
   $('#test2 .row').html(html);
-
-  if(coll == '' && g_a_coll[g_config.playlist] != undefined){ // 初次加载列表
-    loadPlayList(g_config.playlist);
-  }else{
-    loadPlayList('default')
+  if(coll == ''){
+    if(g_a_coll[g_config.playlist] != undefined){ // 初次加载列表
+      loadPlayList(g_config.playlist);
+    }else{
+      loadPlayList('default')
+    }
   }
 }
 
