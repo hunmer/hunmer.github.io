@@ -32,7 +32,7 @@ function loadPage(page){
                 // if(json.ranking != undefined){
                 // }
                  html = html + `<li class="collection-item avatar z-depth-2 waves-effect block" key='`+index+`' index=`+c+`>
-                    <img data-src="`+json.thumbUrl+`" class="lazyload circle">
+                    <img data-src="`+json.thumbUrl.replace('http://', 'https://')+`" class="lazyload circle">
                     <span class="title">`+json.name+`</span>
                     <p>`+json.artistString +`<br><div class="chip">
                        `+getTime(json.lengthSeconds)+`</div><div class="chip `+getColorBySongType(json.songType)+` white-text">`+json.songType+`</div>
@@ -41,7 +41,6 @@ function loadPage(page){
                   </li>`;
                 c++;
             }
-            $('.input-field il li')
             $('#list').html(`<li class="collection-header">
                 <div class="input-field">
                 <select>
@@ -53,8 +52,8 @@ function loadPage(page){
                 <label>`+g_config.playlist+`</label>
               </div>
             </li>`+html);
+            $(".lazyload").lazyload({effect: "fadeIn"});
             $('select').formSelect();
-
             if(g_v_playing === undefined){ // 首次播放
                 var dom = getDomByKey(g_config.lastPlayId);
                 if(dom.length > 0){
@@ -82,7 +81,6 @@ function loadPage(page){
              }
 
 
-            $(".lazyload").lazyload({effect: "fadeIn"});
             var html = '';
             for(var i = start; i<end;i++){
                html = html + `<li index='`+i+`' class="`+(i == page ? 'active' : 'waves-effect')+`"><a href="#!">`+i+`</a></li>`;
