@@ -7,35 +7,67 @@ g_page = -1;
 var g_v_playing;
 
 function loadPage(page){
-    var i_max_page = parseInt(g_max / g_load);
-    if(page > 0 && page <= i_max_page && page !== g_page){
+    var i_max_page = parseInt(g_max / g_load)+1;
+    if(page > 0 && page <= i_max_page){
         g_page = page;
         M.Modal.getInstance($('#modal2')).close();
 
-        console.log('load Page:', page);
-         $('.collection').html('<li class="collection-header"><h4>Playlist</h4></li>');
          $('.pagination').remove();
-         $(document).scrollTop(0);
-
+         toTop();
+         var c = 0;
          var start, end;
        
             start = (page - 1) * g_load;
+            if(start < 0) start = 0;
             end = start + g_load;
             if(end > g_max) end = g_max - 1;
 
-            var c = 0;
-            for(var i = start; i < end; i++){
+            var html = ``;
+            var ranking = {undefined: 0, 1: 0, 2: 0, 3: 0};
+            for(var i = start; i <= end; i++){
                 var index = getIndex(i);
-                var j = g_json.likes[index];
-                //console.log(i, j['name'], j['thumbUrl']);
-                addToList(c,index, g_json.likes[index]);
-                c++;
+                var json = g_json[index];
 
+                ranking[json.ranking]++;
+                // if(json.ranking != undefined){
+                // }
+                 html = html + `<li class="collection-item avatar z-depth-2 waves-effect block" key='`+index+`' index=`+c+`>
+                    <img data-src="`+json.thumbUrl+`" class="lazyload circle">
+                    <span class="title">`+json.name+`</span>
+                    <p>`+json.artistString +`<br><div class="chip">
+                       `+getTime(json.lengthSeconds)+`</div><div class="chip `+getColorBySongType(json.songType)+` white-text">`+json.songType+`</div>
+                    </p>
+                    <a href="#!" class="secondary-content"><i class="material-icons">`+(isLike(json.id) !== -1?'favorite':'favorite_border')+`</i></a>
+                  </li>`;
+                c++;
             }
+            $('.input-field il li')
+            $('#list').html(`<li class="collection-header">
+                <div class="input-field">
+                <select>
+                  <option value="" disabled selected>Choose Ranking</option>
+                  <option value="1">Ranking 1 -- `+ranking[1]+` songs</option>
+                  <option value="2">Ranking 2 -- `+ranking[2]+` songs</option>
+                  <option value="3">Ranking 3 -- `+ranking[3]+` songs</option>
+                </select>
+                <label>`+g_config.playlist+`</label>
+              </div>
+            </li>`+html);
+            $('select').formSelect();
+
+            if(g_v_playing === undefined){ // 首次播放
+                var dom = getDomByKey(g_config.lastPlayId);
+                if(dom.length > 0){
+                   loadIndex(dom);
+                }else{
+                    loadIndex(getDomByIndex(0));
+                }
+             }
 
             // 加载页面选择器
              if(page == i_max_page){
                 start = i_max_page - 4;
+                if(start <= 0) start = 1;
                 end = i_max_page + 1;
                 b_end = true;
             }else{
@@ -48,40 +80,37 @@ function loadPage(page){
                     end = g_max - 1;
                 }
              }
+
+
+            $(".lazyload").lazyload({effect: "fadeIn"});
             var html = '';
             for(var i = start; i<end;i++){
                html = html + `<li index='`+i+`' class="`+(i == page ? 'active' : 'waves-effect')+`"><a href="#!">`+i+`</a></li>`;
             }
             if(!b_end){
-                html = html + `<li index='-1' class='waves-effect'><a class='modal-trigger' href="#modal2">...</a></li>`;
+                if(i_max_page > 5){
+                     html = html + `<li index='-1' class='waves-effect'><a class='modal-trigger' href="#modal2">...</a></li>`;
+                }
+               
                 // 最后一页显示
                  html = html + `<li index='`+i_max_page+`' class="waves-effect"><a href="#!">`+i_max_page+`</a></li>`;
 
             }else{
                 // 把... 换到前面
-                html = `<li index='-1' class='waves-effect'><a class='modal-trigger' href="#modal2">...</a></li>` + html;
+                if(i_max_page > 5){
+                    html = `<li index='-1' class='waves-effect'><a class='modal-trigger' href="#modal2">...</a></li>` + html;
+                }
             }
             html = `<ul class="pagination center" style="height: 100px;">
                   <li class="`+(page == 1 ? 'disabled': 'waves-effect')+`"><a href="#!"><i class="material-icons">chevron_left</i></a></li>`+ html+`<li class="`+(b_end ? 'disabled': 'waves-effect')+`"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
              </ul>`;
 
-             $('.collection').after($(html));
+             $('#list').after($(html));
         }
 }
 
 function addToList(i,key, json){
-    var dom = $(`<li class="collection-item avatar z-depth-2" key='`+key+`' index=`+i+`>
-        <img src="`+json.thumbUrl+`" alt="" class="circle">
-        <span class="title">`+json.name+`</span>
-        <p>`+json.artistString +`<br><div class="chip">
-           `+getTime(json.lengthSeconds)+`</div><div class="chip `+getColorBySongType(json.songType)+` white-text">`+json.songType+`</div>
-        </p>
-        <a href="#!" class="secondary-content`+(isLike(json.id) === -1 ? ' not-active' : '')+`"><i class="material-icons">grade</i></a>
-      </li>`);
-     dom.appendTo('.collection');
-     if(g_v_playing === undefined){
-        loadIndex(dom);
-     }
+   
 }
 
 function getColorBySongType(type){
@@ -120,7 +149,7 @@ function getCurrentIndex(index){
 
 function getJsonbyIndex(index){
     index = getCurrentIndex(index);
-    return g_json.likes[getIndex(index)];
+    return g_json[getIndex(index)];
 }
 
 
@@ -129,6 +158,12 @@ function getDomByIndex(index){
     index = getCurrentIndex(index);
     return $('.collection-item.avatar[index='+index+']');
 }
+
+function getDomByKey(key){
+    return $('.collection-item.avatar[key='+key+']');
+}
+
+
 
 var g_timer_getNewURL = 0;
 var g_s_url = '';
@@ -146,32 +181,65 @@ setInterval(function(){
     }
 }, 1000);
 
+
+function switchVideo(){
+   var video = $('video')[0];
+    if(!video.paused){
+        video.pause();
+    }
+    g_i_playIn = 0;
+}
+
+
 //loadIndex(getDomByIndex(1));
 function loadIndex(dom){
     clearInterval(g_timer_getNewURL);
+    switchVideo();
 
+    var index;
     if(typeof(dom) === 'number'){
         dom = getDomByIndex(dom);
     }else{
-        g_index = parseInt(dom.attr('index'));
+        index = dom.attr('index');
+        if(index === undefined){
+            closeSearch();
+            M.Sidenav.getInstance($('.sidenav')).close();
+            console.log(dom);
+            index = parseInt(dom.attr('page'));
+            if(index != g_page){
+                loadPage(index);
+            }
+            dom = $('#list .collection-item.avatar[key='+dom.attr('key')+']');
+            g_index = dom.attr('index');
+        }else{
+            g_index = parseInt(index);
+        }
     }
+
     $('.playing').removeClass('playing');
     $(dom).addClass('playing');
 
     var key = dom.attr('key');
-    var json = g_json.likes[key];
-    g_v_playing = json;
-    g_a_coll[g_s_playlist].lastPlay = json;
-    console.log(key, json);
+    var json = g_json[key];
+    g_config.lastPlayId = key;
+    local_saveJson('config', g_config);
 
+    g_v_playing = json;
+    $('#song_name').html(json.name);
+    $('#song_artist').html(json.artistString);
+    $('#song_cover')[0].src = json.thumbUrl;
+
+    $('#_card_'+g_config.playlist+' img')[0].src =  json.thumbUrl;
+
+    json.key = key;
+    g_a_coll[g_config.playlist].lastPlay = json;
+    console.log(key, json);
      $('#cover_btn')[0].style.backgroundImage = 'url("'+json.thumbUrl+'")';
     var tilte = json.name+' - '+json.artistString;
     $('.brand-logo').text(tilte);
      M.Toast.dismissAll();
-    M.toast({html: '播放 -> '+tilte, classes: 'rounded', displayLength: 2000});
+    M.toast({html: tilte+'<button class="btn-flat toast-action" onclick="toTop();">UP ↑</button>', classes: 'rounded', displayLength: 2000});
   
-
-    var dom;
     var url 
     if(json.playerHtml.indexOf('cdn.piapro.jp') !== -1){
         url = 'https://'+json.playerHtml;
@@ -193,9 +261,9 @@ function loadIndex(dom){
     if(g_config.playMode === 2){
 
     }
-
-    dom = $('#videoBox video').show()[0];
     $('#videoBox iframe').remove();
+    $('.video-container').hide();
+    dom = $('#videoBox video').show()[0];
     dom.poster = json.thumbUrl;
     if(url.indexOf('bilibili.com') !== -1){
          $.get(url, function(data) {
@@ -218,8 +286,7 @@ function loadIndex(dom){
         dom.load();
     }
 
-    // 被cors拦截
-   /* if(url.indexOf('nicovideo.jp') !== -1){
+    if(url.indexOf('nicovideo.jp') !== -1){
         g_timer_getNewURL = setInterval(function(){
             $.get(url+'&dump=true', function(data) {
                 if(data != ''){
@@ -227,7 +294,7 @@ function loadIndex(dom){
                 }
             });
         }, 20 * 1000);
-    }*/
+    }
 
     dom.onloadstart = function(){
          if(g_i_playIn > 0){
@@ -244,15 +311,44 @@ function loadIndex(dom){
         console.log(dom.currentTime);
     }*/
     dom.onended = function(){
-        console.log('eee');
+        addHistory();
         g_i_playIn = 0;
         switchNext();
     }
     dom.onerror = function(){
-        //dom.src = g_s_url;
-        dom.load();
+        dom.src = g_s_url;
+        //dom.load();
     }
 }
+
+function addHistory(){
+    if(g_v_playing !== undefined){
+          for(var i = 0; i<g_v_history.length;i++){
+            if(i>10){
+                g_v_history.splice(i, 1);
+            }else
+            if(g_v_history[i].id == g_v_playing.id){
+                g_v_history.splice(i, 1);
+            }
+        }
+         g_v_history.unshift(g_v_playing);
+        local_saveJson('his', g_v_history);
+    }
+}
+
+function openHistory(){
+    var c = 0;
+    var html = '';
+    var json;
+    for(var i = 0; i<g_v_history.length;i++){
+        c++;
+        json = g_v_history[i];
+         html = html + `<li style="padding-top: 10px;text-align:center" class="collection-item waves-effect block" key='`+getIndexById(json.id, 2)+`' page=`+(parseInt(c / g_load) + 1)+`>`+json.name+`<a href="#!" class="secondary-content"><i class="material-icons">`+(isLike(json.id) !== -1?'favorite':'favorite_border')+`</i></a>
+          </li>`;
+    }
+    $('#history .collection').html(html);
+}
+
 
 function getVideoHomepage(url){
     if(url.indexOf('embed.nicovideo.jp') !== -1){
@@ -286,6 +382,22 @@ function getIndex(i){
     return g_keys[i];
 }
 
+function getIndexById(id, mode = 1){
+    if(mode===1){
+        var dom = $('.collection-item.avatar[index='+id+']');
+        if(dom.length > 0){
+            return dom.attr('key');
+        }
+    }else{
+        for(var i in g_json){
+            if(g_json[i].id == id){
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
 function randomNum(minNum,maxNum){ 
     switch(arguments.length){ 
         case 1: 
@@ -300,43 +412,3 @@ function randomNum(minNum,maxNum){
     } 
 } 
 
-var g_config = local_readJson('config', {
-  'index': 1,
-  'playMode': 1, // iframe播放
-});
-//$('#selecter_mode li:eq('+g_config.playMode+1+')').addClass('selected');
-// 播放器本地存储信息
-// 参数：键值、数据
-function local_saveJson(key, data) {
-    if (window.localStorage) {
-        key = 'vm_' + key;    // 添加前缀，防止串用
-        data = JSON.stringify(data);
-        return localStorage.setItem(key, data);
-    }
-    return false;
-}
-
-// 播放器读取本地存储信息
-// 参数：键值
-// 返回：数据
-function local_readJson(key, defaul = '') {
-    if(!window.localStorage) return defaul;
-    key = 'vm_' + key;
-    var r = JSON.parse(localStorage.getItem(key));
-    return r === null ? defaul : r;
-}
-
-function getLocalItem(key, defaul = '') {
-    var r = null;
-    if(window.localStorage){
-        r = localStorage.getItem('vm_' + key);
-    }
-    return r === null ? defaul : r;
-}
-
-function setLocalItem(key, value) {
-    if(window.localStorage){
-       return localStorage.setItem('vm_' + key, value);
-    }
-    return false;
-}

@@ -1,30 +1,74 @@
 $(function() {
        $('.sidenav').sidenav();
-       $('.tabs').tabs();
+       $('.collapsible').collapsible({
+        onOpenStart: function(dom){
+          console.log(dom);
+            case 'history':
+              openHistory();
+              break;
+          }
+        }
+       });
+        $('.tabs').tabs({
+            duration: 500,
+         });
          $('select').formSelect();
          $('.fixed-action-btn').floatingActionButton({
           hoverEnabled: false
          });
          $('.modal').modal({
           onOpenStart: function(){
+            console.log('aa');
              var i_max_page = parseInt(g_max / g_load);
-             var s_html = '<div class="row">';
+             var s_html = '<form action="#">';
              for(var i=0;i<i_max_page;i++){
-              s_html = s_html + '<div class="col s3" onclick="loadPage('+i+')">'+i+'</div>';
+              s_html = s_html + `<p><label onclick="loadPage(`+i+`)"><input class="with-gap" name="group3" type="radio" `+(i==g_page ? 'checked' : '')+` /><span>`+i+`</span></label></p>`;
              }
-              s_html = s_html + '</div>';
+              s_html = s_html + '</form>';
               $('#modal2 .modal-content').html(s_html);
           }
          });
-       var q = $.get('js/data.json');
-      q.always(function(){
-          g_json = JSON.parse(q.responseText);
-          g_keys = Object.keys(g_json.likes);
-          g_max = g_keys.length;
-          loadPage(1);
-      });
 
-
+       window.history.pushState(null, null, "#");
+       window.addEventListener("popstate", function(event) {
+          window.history.pushState(null, null, "#");
+          event.preventDefault(true);
+          var dom = $('.tab .active');
+          if(dom.attr('href') != '#test1'){
+            M.Tabs.getInstance($('.tabs')).select('test1');
+          }
+       });
+     var g_v_grid_down = {
+        start: 0,
+        task: -1,
+        element: null,
+        holding: false
+      };
+     $('body')
+      .on('touchstart', '#floatingMenu', function(event) {
+        g_v_grid_down.start = getNow();
+        g_v_grid_down.task = window.setTimeout(function(){
+          if(g_v_grid_down.start > 0){
+            g_v_grid_down.holding = true;
+            if($('.playing').length > 0){
+              $('html,body').animate({ scrollTop: $('.playing').offset().top - $(window).height() / 2 }, 500);
+            }
+          }
+          g_v_grid_down.start = 0;
+          g_v_grid_down.task = -1;
+          event.stopPropagation();
+        }, 1000);
+      })
+      .on('touchend', '#floatingMenu', function(event) {
+        if(g_v_grid_down.task != -1){
+          window.clearTimeout(g_v_grid_down.task);
+        }
+        g_v_grid_down.start = 0;
+        if(g_v_grid_down.holding){
+          event.stopPropagation();
+        }
+        g_v_grid_down.holding = false;
+      })
       $('.dropdown-trigger').dropdown({
             alignment: 'center',
           onCloseEnd: function(){
@@ -49,137 +93,148 @@ $(function() {
             console.log('close', );
           }
         });
+        initColl();
 });   
 
+function searchByKeyword(){
+   var s = $('#search input').val();
+   var html = '';
+   var json, page;
+   var c = 0;
+    for(var i of g_keys){
+      json = g_json[i];
+      c++;
+      if(json.name.indexOf(s) !== -1){
+        page = parseInt(c / g_load) + 1;
+        html = html + `<li class="collection-item avatar z-depth-2 waves-effect block" style='width: 100%;color: black;'  key='`+i+`' page=`+page+`>
+          <img data-src="`+json.thumbUrl+`" class="lazyload circle">
+          <span class="title">`+json.name+`</span>
+          <p>`+json.artistString +`<br><div class="chip">
+             `+getTime(json.lengthSeconds)+`</div><div class="chip `+getColorBySongType(json.songType)+` white-text">`+json.songType+`</div>
+          </p></li>`;
+      }
+    }
+    $('#search .collection').html(html);
+    $(".lazyload").lazyload({effect: "fadeIn"});
+}
+
+function getNow(){
+  return new Date().getTime();
+}
+
 function openSearch(){
+      $('#search .collection').html('');
       $('.nav-extended').hide();
       $('nav#search').show().focus();
-      setTimeout(function() {$('input#search').focus() }, 100);
+      setTimeout(function() {$('._content').hide();$('#search input').focus(); }, 100);
 }
 
 function closeSearch(){
       $('.nav-extended').show();
       $('nav#search').hide();
       $('input#search').val('');
+      $('div._content.active').show();
+      $('#search .collection').html('');
+
 }
 
-/*g_a_coll = {
-  like: {songs: [], lastPlay: null}
-};
-local_saveJson('coll', g_a_coll);
-*/
-var g_s_playlist = 'like';
-var g_a_coll = local_readJson('coll', {
-  like: {songs: [], lastPlay: null}
-});
-
-var g_likes_id = [];
-for(var i in g_a_coll.like.songs){
-  g_likes_id.push(g_a_coll.like.songs[i].id);
-}
-
-initColl();
-function initColl(){
+function initColl(coll = ''){
+  var html = '';
+  var pic, last, lastName;
   for(var i in g_a_coll){
-    var name = i;
-    switch(i){
-      case 'like':
-        name = '我喜欢的音乐';
-        break;
-    }
-    var pic = '';
-    var last =  g_a_coll[i].lastPlay;
-    var lastName = '';
+    if(coll != '' && i != coll) continue;
+
+    last =  g_a_coll[i].lastPlay;
     if(last === null){
-      lastName = '';
-      pic = g_a_coll[i].songs.length > 0 ? g_a_coll[i].songs[0].thumbUrl : '';
+      //lastName = '';
+       pic = g_a_coll[i].songs != undefined && g_a_coll[i].songs.length > 0 ? g_a_coll[i].songs[0].thumbUrl : '';
     }else{
-      lastName = last.name + ' - ' + last.artistString;
+      //lastName = last.name + ' - ' + last.artistString;
       pic = last.thumbUrl; 
     }
-    console.log(last, lastName);
+    if(pic === '') pic = 'images/user.jpg';
 
-     $(`
-      <div class="col s4">
-        <div class="card">
+     html = html + `<div class="col s6">
+        <div class="card" id='_card_`+i+`'>
           <div class="card-image">
-            <span class="white-text badge blue left floatTag">`+g_a_coll[i].songs.length+`</span>
+            <span class="white-text badge blue left floatTag">`+(g_a_coll[i].count != undefined ? g_a_coll[i].count : g_a_coll[i].songs.length)+`</span>
 
             <img src="`+pic+`" style="cursor:pointer">
-            <span class="card-title">`+name+`</span>
             <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons" onclick='loadPlayList("`+i+`")'>play_circle_filled</i></a>
           </div>
           <div class="card-content" style="cursor:pointer">
-            <p>`+lastName+`</p>
+            <p>`+i+`</p>
           </div>
         </div>
-      </div>`).appendTo('#test2 .row');
-   
+      </div>`;
+           // <span class="card-title nowarp _shadow_1">`+i+`</span>
+
+  }
+  $('#test2 .row').html(html);
+
+  if(coll == '' && g_a_coll[g_config.playlist] != undefined){ // 初次加载列表
+    loadPlayList(g_config.playlist);
+  }else{
+    loadPlayList('default')
   }
 }
 
 function loadPlayList(coll){
   console.log('loadPlayList', coll);
-}
-
-function addToFavorite(json, coll = 'like'){
-  if(g_a_coll[coll] != undefined){
-    if(isFavorite(json.id, coll) === -1){
-      g_a_coll[coll].songs.push(json);
-      local_saveJson('coll', g_a_coll);
+  M.Tabs.getInstance($('.tabs')).select('test1');
+  g_config.playlist = coll;
+  local_saveJson('config', g_config);
+  if(coll == 'default'){
+    var q = $.get('js/data.json');
+    q.always(function(){
+      loadJson(q.responseText);
+    });
+  }else{
+    if(g_a_coll[coll].lastPlay != null){
+       g_config.lastPlayId = g_a_coll[coll].lastPlay.key;
     }
+    loadJson(g_a_coll[coll].songs);
   }
 }
 
-function removeFromFavorite( json, coll = 'like'){
-  if(g_a_coll[coll] != undefined){
-    var i = isFavorite(json.id, coll);
-    if(i !== -1){
-      g_a_coll[coll].songs.splice(i, 1);
-      local_saveJson('coll', g_a_coll);
-    }
+function loadJson(json){
+  if(typeof(json) == 'string'){
+    g_json = JSON.parse(json);
+  }else{
+    g_json = json;
   }
-}
-
-
-function isFavorite(id, coll = 'like'){
-  console.log(id);
-  for(var i=0;i<g_a_coll[coll].songs.length;i++){
-    if(g_a_coll[coll].songs[i]['id'] == id){
-      return i;
+    g_keys = Object.keys(g_json);
+    g_max = g_keys.length;
+    var c = 0;
+    for(var i in g_keys){
+      c++;
+      if(i == g_config.lastPlayId){
+        loadPage(parseInt(c / g_load) + 1);
+        return;
+      }
     }
-  }
-  return -1;
+    loadPage(1);
 }
-
-function isLike(id,){
-  for(var i=0;i<g_likes_id.length;i++){
-    if(g_likes_id[i] == id){
-      return i;
-    }
-  }
-  return -1;
-}
-
-
 
 $(document).on('click', 'i.material-icons', function(event) {
-      var par = $(this.parentElement);
+      var par = $(this.parentElement.parentElement);
       switch(this.innerHTML){
-            case 'grade':
-              var j = g_json.likes[par.parent().attr('key')];
-              console.log(j);
-              if(par.hasClass('not-active')){
-                addToFavorite(j);
-              }else{
-                removeFromFavorite(j);
-              }
-              par.toggleClass('not-active');
+            case 'favorite':
+            var key = par.attr('key');
+              var j = g_json[key];
+              removeFromFavorite(key, j);
+              event.stopPropagation();
+              break;
+
+            case 'favorite_border':
+            var key = par.attr('key');
+              var j = g_json[key];
+              addToFavorite(key, j);
               event.stopPropagation();
               break;
       }
 }).
-on('click', '.collection-item.avatar', function(event) {
+on('click', '.collection-item', function(event) {
       loadIndex($(this));
 })
 .on('click', '.pagination li', function(event) {
@@ -199,7 +254,7 @@ on('click', '.collection-item.avatar', function(event) {
 .on('click', '#floatingMenu i', function(event) {
   switch(this.innerText){
     case 'keyboard_arrow_up': 
-      $('html,body').animate({ scrollTop: 0 }, 500);
+      toTop();
       break;
 
     case 'search':
@@ -217,6 +272,9 @@ on('click', '.collection-item.avatar', function(event) {
 
 
 });
+function toTop(){
+    $('html,body').animate({ scrollTop: 0 }, 500);
+}
 
 /*var ha = ($('#videoBox').offset().top + $('#videoBox').height());
 $(window).scroll(function() {
