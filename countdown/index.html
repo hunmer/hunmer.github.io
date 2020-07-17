@@ -31,7 +31,7 @@
 <span>分钟</span><input type="number" id="min" value="10"><br>
 <span>间隔</span><input type="number" id="inter" value="60"><br>
 <span>提示</span><textarea id="text">残り %m</textarea><br>
-<button id='switch' onclick="start();" disabled>开始</button>
+<button id='switch' onclick="start();">开始</button>
 </div>
 </body>
 </html>
@@ -52,7 +52,6 @@ setTimeout(function(){
 function loadVoice(){
 	var synth = window.speechSynthesis;
 	var voices = synth.getVoices();
-	document.getElementById('switch').disabled = false;
 	for(i = 0; i < voices.length ; i++) {
 		if(voices[i].lang == 'ja-JP' && voices[i].localService){
 			utterThis.voice = voices[i];
