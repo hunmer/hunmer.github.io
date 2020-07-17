@@ -1,0 +1,124 @@
+ <html>
+    <head>
+      <link href="font/icon.css" rel="stylesheet">
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    </head> 
+<style type="text/css">
+
+	* {
+		text-align: center;
+	}
+	span {
+		display: block;
+	}
+	div {
+		margin: 0px auto;
+		display: table;
+	}
+	button,textarea {
+		width: 100%;
+	}
+	button {
+		height: 30px;
+	}
+
+</style>
+<body>
+
+<div>
+<h1 id='time'>00:00</h1>
+<span>分钟</span><input type="number" id="min" value="10"><br>
+<span>提示</span><textarea id="text">残り %m</textarea><br>
+<button id='switch' onclick="start();" disabled>开始</button>
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+var g_callback = 0;
+var g_cd = 0;
+
+var synth = window.speechSynthesis;
+var utterThis = new SpeechSynthesisUtterance();
+utterThis.pitch = 1;
+utterThis.rate = 1;
+utterThis.volume = 1;
+setTimeout(function(){
+	loadVoice();
+}, 1000);
+
+function loadVoice(){
+	var synth = window.speechSynthesis;
+	var voices = synth.getVoices();
+	document.getElementById('switch').disabled = false;
+	for(i = 0; i < voices.length ; i++) {
+		if(voices[i].lang == 'ja-JP' && voices[i].localService){
+			utterThis.voice = voices[i];
+			return;
+		}
+	}
+}
+
+function destoryCallback(){
+	if(g_callback != 0){
+		clearInterval(g_callback);
+		g_callback = 0;
+		document.getElementById('switch').innerHTML = '开始';
+		return true;
+	}
+	document.getElementById('switch').innerHTML = '结束';
+	return false;
+}
+
+function start(){
+	if(destoryCallback()) return;
+	g_cd = parseInt(document.getElementById('min').value) * 60;
+	if(g_cd > 0){
+		g_callback = setInterval(function(){
+			g_cd--;
+			if(g_cd <= 5){
+				speak(g_cd);
+				if(g_cd == 0){
+					destoryCallback();
+					return;
+				}
+			}else
+			if(g_cd % 10 === 0){
+				speak(getText());
+			}
+
+			document.getElementById('time').innerHTML = getTimeFormat(g_cd);
+		}, 1000);
+	}else{
+		document.getElementById('switch').innerHTML = '开始';
+	}
+}
+
+function getTimeFormat(i){
+	var h = parseInt(i / 3600);
+	i %= 3600;
+	var m = parseInt(i / 60);
+	i %= 60;
+	return _s(h, ':', true)+ _s(m, ':')+_s(i);
+}
+
+function _s(i, s='', b=false){
+	if(b && i == 0) return '';
+	return (i<10?'0'+i:i)+s;
+}
+
+function getText(){
+	var h = parseInt(i / 3600);
+	i %= 3600;
+	var m = parseInt(i / 60);
+	i %= 60;
+	return document.getElementById('text').value.replace('%m', m+'分').replace('%h', m+'時').replace('%s', m+'秒');
+}
+
+function speak(s_text){
+	console.log(s_text);
+	utterThis.text = s_text;
+	synth.speak(utterThis);
+}
+</script>
