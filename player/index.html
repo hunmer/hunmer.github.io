@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>player</title>
+    	<link rel="stylesheet" href="dist/plyr.css" />
+	</head>
+	<body>
+		<video id="player"></video>
+    	<script src="dist/plyr.js" crossorigin="anonymous"></script>
+		<script type="text/javascript">
+
+			function getS(s, l, r){
+				var i_s = s.indexOf(l);
+				if(i_s != -1){
+					i_s+=l.length;
+					var i_e;
+					if(r == ''){
+						i_e = s.length;
+					}else{
+						i_e = s.indexOf(r, i_s);
+						if(i_e == -1) i_e = s.length;
+					}
+					return s.substr(i_s, i_e-i_s);
+				}
+			}
+			const player = new Plyr('#player', {
+			  title: 'Example Title',
+			});
+			player.source = {
+				  type: 'video',
+				  title: 'Example title',
+				  sources: [
+				    {
+				      src: getS(location.search, '?url=', '&cover='),
+				      type: 'video/mp4',
+				      size: 1080,
+				    },
+				  ],
+				  poster: getS(location.search, '&cover='),
+				};
+		</script>
+	</body>
+
+</html>
