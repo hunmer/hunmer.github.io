@@ -8,20 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="css/jquery.restable.min.css">
-    <link rel="stylesheet" type="text/css" href="css/search-form.css">
 <body>
-     <form onsubmit="submitFn(this, event);">
-            <div class="search-wrapper">
-                <div class="input-holder">
-                    <input type="text" class="search-input" placeholder="Type to search" oninput="changeKeyword(this)" />
-                    <button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
-                </div>
-                <span class="close" onclick="searchToggle(this, event);"></span>
-                <div class="result-container">
-
-                </div>
-            </div>
-        </form>
         <div class="container">
             <span class="title">List of GuideBook of Drawing(423)<br><span style="    font-size: 10px;">Sat Jul 11 2020 00:15:02 GMT+0800 (中国标准时间)</span></span>
     <table id="table3">
@@ -32,8 +19,24 @@
             <th>Title</th>
             <th>Lang</th>
             <th>Product</th>
-            <th>Downloads</th>
+            <th>Download1</th>
+            <th>Download2</th>
         </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                 <select id='lang_select'>
+                    <option>ALL</option>
+                    <option>CHINESE</option>
+                    <option>ENGLISH</option>
+                    <option>JAPANESE</option>
+                </select>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
         </thead>
         <tbody>
         
@@ -55,40 +58,89 @@
     </table>
         </div>
 
-	
+	<select onselect=""></select>
 	<script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="js/jquery.sticky-sidebar.min.js"></script>      
 	<script type="text/javascript" src="js/jquery.restable.min.js"></script>
-    <script type="text/javascript" src="js/drawbooks.min.js"></script>
+    <script type="text/javascript" src="js/drawbooks.js"></script>
     <script type="text/javascript" src="js/lazyload.min.js"></script>
+    <script type="text/javascript">
+    
+    </script>
 
 	<script>
         var g_s_search = '';
         var g_search = [];
         $(function(){
-            var h = '';
-            var id = 0;
-            for(var d of g_datas){
-                id++;
-                h = h + `<tr>
-                <td>`+id+`</td>
-                <td><img data-src="`+d.img+`" class='lazyload'></td>
-                <td>`+d.title+`</td>
-                <td>`+d.lang+`</td>
-                <td><a target="_blank" href="`+d.prev+`">go</a></td><td><ol>`
-                for(var i=0;i<=d.link.length;i++){
-                    h = h + '<li><a target="_blank" href="'+d.link[i]+'">download</a></li>';
-                }
-                h = h + '</ol></td></tr>';
-            }
-            $('tbody').html(h);
-            $('#table3').ReStable({keepHtml: true, rowHeaders: false});
-            $(".lazyload").lazyload({effect: "fadeIn"});
+            parseData();
+
+            $(document).on('click', 'img', function(){
+                var d = $(this).parent().parent().find('a.read');
+                if(d.length > 0) d[0].click();
+            });
         })
+
+    function parseData(){
+        $('tr:gt(1)').remove();
+
+        var h = ``;
+        var id = 0;
+        lang = $('#lang_select').val();
+        for(var d of g_datas){
+            if(lang != 'ALL' && d.lang != lang) continue;
+            id++;
+            h = h + `<tr>
+            <td>`+id+`</td>
+            <td><img data-src="`+d.img+`" class='lazyload'></td>
+            <td><a target="_blank" href="https://www.google.com/search?q=`+d.title+`">`+d.title+`</a></td>
+            <td>`+d.lang+`</td>
+            <td>`+(d.prev == '' ? '' : `<a target="_blank" href="`+d.prev+`">go</a>`)+`</td><td>`;
+
+             if(d.online != undefined){
+                  h = h + `Size: <span>`+formatFileSize(d.online.size)+`</span><hr></br><a target="_blank" class='read' href="https://neysummer2000-location.glitch.me/?id=`+d.online.id+`&title=`+ encodeURI(d.title)+`">Read</a></br></br><a target="_blank" href="http://pan-yz.chaoxing.com/download/downloadfile?fleid=`+d.online.id+`&puid=142588570">Download</a>`;
+            }
+             h = h + '</td><td><ol>';
+            for(var i=0;i<d.link.length;i++){
+                if(d.link[i].indexOf('提取码') === -1){
+                 h = h + '<li><a target="_blank" href="'+d.link[i]+'">download</a></li>';
+                }else{
+                 h = h + '<li>'+d.link[i]+'</li>';
+                }
+            }
+           
+            h = h + '</ol></td></tr>';
+        }
+        $('tbody').html(h);
+        $(".lazyload").lazyload({effect: "fadeIn"});
+        $('#table3').ReStable({keepHtml: true, rowHeaders: false});
+    }
+
+    function formatFileSize(fileSize) {
+    if (fileSize < 1024) {
+        return fileSize + 'B';
+    } else if (fileSize < (1024*1024)) {
+        var temp = fileSize / 1024;
+        temp = temp.toFixed(2);
+        return temp + 'KB';
+    } else if (fileSize < (1024*1024*1024)) {
+        var temp = fileSize / (1024*1024);
+        temp = temp.toFixed(2);
+        return temp + 'MB';
+    } else {
+        var temp = fileSize / (1024*1024*1024);
+        temp = temp.toFixed(2);
+        return temp + 'GB';
+    }
+}
 
 
     </script>
     <script type="text/javascript">
+
+        $(function() {
+            $(document).on('change', '#lang_select', function(){
+                parseData();
+            })
+        });
 
         function changeKeyword(){
             value = $('input').val().trim();
