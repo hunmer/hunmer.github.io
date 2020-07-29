@@ -13,12 +13,8 @@
 </head> 
 <style type="text/css">
     img {
-    width: 100px;
-    height: 100px;
-    }
-    span {
-        display: block;
-        text-align: center;
+    width: 90px;
+    height: 120px;
     }
 </style>
 <body>
@@ -182,7 +178,7 @@
          $($('.helper-text')[1]).hide();
          $('.progress').show();
 
-         $.post('./php/index.php', {title: $('textarea')[0].value, message: $('textarea')[1].value}, function(data, textStatus, xhr) {
+         $.post('https://neysummer2000-location.glitch.me/report.php', {title: $('textarea')[0].value, message: $('textarea')[1].value}, function(data, textStatus, xhr) {
             if(textStatus == 'success' && data == 'success'){
                 M.toast({html: 'Send Success!'});
                 $('#modal1').modal('close');
@@ -347,9 +343,6 @@
         temp = temp.toFixed(2);
         return temp + 'GB';
     }
-
-   
-
  
 
 }
@@ -381,17 +374,20 @@
         function searchByKeyword(){
            var s = $('#search input').val();
            var html = '';
-           var c = 1;
-            for(var json of g_datas){
-              c++;
-              if(json.title.indexOf(s) !== -1){
-                html = html + `<li class="collection-item avatar z-depth-2 waves-effect block" style='width: 100%;color: black;' key='`+c+`'>
-                  <img data-src="`+json.img+`" class="lazyload circle">
-                  <span class="title">`+json.title+`</span>
-                  <br>`+(json.online != undefined ? '<div class="chip">'+formatFileSize(json.online.size)+`</div>`:'')+`<div class="chip `+getColorByLang(json.lang)+` white-text">`+json.lang+`</div>
-                  </p></li>`;
+           if(s != ''){
+              var c = 1;
+              for(var json of g_datas){
+                c++;
+                var i_s = json.title.indexOf(s);
+                if(i_s !== -1){
+                  html = html + `<li class="collection-item avatar z-depth-2 waves-effect block" style='width: 100%;color: black;' key='`+c+`'>
+                    <img data-src="`+json.img+`" class="lazyload">
+                    <div class="title">`+json.title.replace(s, '<span style="color: red">'+s+'</span>')+`</div>
+                    <br>`+(json.online != undefined ? '<div class="chip">'+formatFileSize(json.online.size)+`</div>`:'')+`<div class="chip `+getColorByLang(json.lang)+` white-text">`+json.lang+`</div>
+                    </p></li>`;
+                }
               }
-            }
+           }
             $('#search .collection').html(html);
             $(".lazyload").lazyload({effect: "fadeIn"});
         }
@@ -409,7 +405,7 @@
 
          function toItem(index){
             $('.search_active').removeClass('search_active');
-            $(document).scrollTop($('#table-two-axis tr:eq('+index+')').addClass('search_active').offset().top - $(this).width() / 2);
+            $(document).scrollTop($('#table-two-axis tr:eq('+index+')').addClass('search_active').offset().top - $(this).height() / 2);
         }
     </script>
 </body>
