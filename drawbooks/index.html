@@ -195,6 +195,7 @@
     }
         var g_s_search = '';
         var g_search = [];
+         var g_datas = [];
         var a_get = getGETArray();
         if(a_get['lang'] == undefined){
             a_get['lang'] = 'ALL';
@@ -203,15 +204,17 @@
            M.AutoInit();
             $('textarea').characterCounter();
 
-             var g_datas = [];
              if(window.location.protocol == 'file:'){
                 var D = document;
                 var scriptNode = D.createElement ('script');
                 scriptNode.type = "text/javascript";
                 scriptNode.src = './js/drawbooks.js';
                 var targ = D.getElementsByTagName ('head')[0] || D.body || D.documentElement;
+                 scriptNode.textContent  = '(alert(1))()';
                 targ.appendChild (scriptNode);
-                parseData();
+                scriptNode.onload = function() {
+                  parseData();
+                }
              }else{
                  $.getJSON('./js/drawbooks.json', function(json, textStatus) {
                     g_datas = json;
@@ -276,7 +279,6 @@
         }
 
     function parseData(){
-        
         //$('tr:gt(1)').remove();
         var h = `<tr>
                 <td></td>
