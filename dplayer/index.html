@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>player</title>
+	</head>
+	<body>
+		<div id="player"></div>
+    	<script src="hls.min.js"></script>
+    	<script src="DPlayer.min.js"></script>
+		<script type="text/javascript">
+			function getS(s, l, r){
+				var i_s = s.indexOf(l);
+				if(i_s != -1){
+					i_s+=l.length;
+					var i_e;
+					if(r == ''){
+						i_e = s.length;
+					}else{
+						i_e = s.indexOf(r, i_s);
+						if(i_e == -1) i_e = s.length;
+					}
+					return s.substr(i_s, i_e-i_s);
+				}
+			}
+			var config = {
+		        container: document.querySelector('#player'),
+		        autoplay: true,
+		        volume: 1,
+		        lang: 'en',
+		        video: {
+		            url: getS(location.search, '?url=', '&cover='),
+		            pic: getS(location.search, '&cover='),
+		        },
+		        subtitle: {
+		            // url: 'webvtt.vtt',
+		        }
+		    };
+		    _video = new DPlayer(config);
+		</script>
+	</body>
+
+</html>
