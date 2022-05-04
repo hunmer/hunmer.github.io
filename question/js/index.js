@@ -7,7 +7,9 @@ $(function() {
     nextQuestion();
 });
 
-var g_cache = {};
+var g_cache = {
+	last: -1,
+};
 
 function nextQuestion() {
     if (!g_cache.keys) {
@@ -19,12 +21,16 @@ function nextQuestion() {
     	getDom('check').hide();
     	return alert('恭喜你已经通关了!');
     }
-    var key = arrayRandom(g_cache.keys);
-    showQuestion(key);
+    // var key = arrayRandom(g_cache.keys);
+    var index = ++g_cache.last;
+    if(index >= g_cache.keys.length){
+    	index = 0;
+    }
+    g_cache.last = index;
+    showQuestion(g_cache.keys[index]);
 }
 
 function showQuestion(key) {
-	console.log(key);
     var list = g_questions[key];
     if (!Array.isArray(list)) list = [list];
 
@@ -40,12 +46,18 @@ function showQuestion(key) {
         }
         h += `
 			<div class="input-group mt-3" data-answer="${item}">
-			  <span class="input-group-text">${++i}</span>
+			  <span class="input-group-text" data-action="showAnswer">${++i}</span>
 			  <textarea class="form-control" placeholder="${item.substr(0, 2)}"${answer != '' ? ' readonly' : ''}>${answer}</textarea>
+			</div>
+
+			<div class="alert alert-info" style="display: none;" role="alert">
+			  <b>${item}</b>
+			  <div class="d-block text-end">
+			  	<button class="btn btn-link text-end" data-action="${answer != '' ? 'nounderstand' : 'understand'}">${answer != '' ? '不懂' : '懂了'}</button>
+			  </div>
 			</div>
 		`;
     }
-    console.log(show);
     if (show) {
         $('#title').html(key);
           $('#content').html(h);
@@ -63,15 +75,7 @@ function check() {
     for (var group of $('.input-group[data-answer]')) {
         group = $(group);
         if (!group.find('textarea').prop('readonly')) {
-            var answer = group.attr('data-answer');
-            $(`
-				<div class="alert alert-info" role="alert">
-				  <b>${answer}</b>
-				  <div class="d-block text-end">
-				  	<button class="btn btn-link text-end" data-action="understand">懂了</button>
-				  </div>
-				</div>
-			`).insertAfter(group);
+        	group.next('.alert').show();
         }
     }
     getDom('check').hide();
@@ -81,6 +85,9 @@ function check() {
 function doAction(dom, action) {
     action = action.split(',');
     switch (action[0]) {
+    	case 'showAnswer':
+    		$(dom).parents().next().show();
+    		break;
     	case 'reset':
     		if(confirm('确定重置吗?')){
     			delete g_cache.keys;
@@ -89,11 +96,16 @@ function doAction(dom, action) {
     			nextQuestion();
     		}
     		break;
+    	case 'nounderstand':
         case 'understand':
             dom = $(dom);
             var answer = dom.parents().prev().html();
-            console.log(answer, dom)
-            g_config.primary[answer] = new Date().getTime();
+            if(action[1] == 'understand'){
+            	g_config.primary[answer] = new Date().getTime();
+
+            }else{
+            	delete g_config.primary[answer];
+            }
             saveConfig();
             dom.remove();
             break;
