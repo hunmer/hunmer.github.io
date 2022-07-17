@@ -1,0 +1,90 @@
+.am-viewport {
+    height: 100%;
+}
+
+
+.inputstyle {
+    cursor: pointer;
+    font-size: 30px;
+    outline: medium none;
+    position: absolute;
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    opacity: 0;
+    left: -100px;
+    top: -100px;
+}
+
+
+
+.ftb {
+    position: fixed;
+    right: 10px;
+    bottom: 20px;
+    z-index: 999;
+    display: grid;
+}
+
+.ftb a {
+    margin: 5px;
+}
+
+::-webkit-scrollbar { width: 0 !important }
+
+.m-0 {
+	margin: 0;
+}
+
+.bg-danger {
+	background-color: #dd514c !important;
+    color: #fff !important;
+}
+
+.bg-primary {
+	background-color: #0e90d2 !important;
+    color: #fff !important;
+}
+
+.text-danger * {
+	color: #dd514c !important;
+}
+
+
+
+.bg-light {
+	color: #000;
+    background-color: #fff;
+}
+
+.position-relative {
+	position: relative;
+}
+
+.position-absolute {
+	position: absolute;
+}
+
+.slider_video_item span {
+	color: #fff;
+    position: absolute;
+    left: 20px;
+    bottom: 50px;
+    font-size: 12px;
+    max-width: 70vw;
+}
+
+.text-dark {
+	color:  #000;
+}
+
+.text-success {
+	color:  #5eb95e;
+}
+
+.text-light {
+	color:  #000 !important;
+}
+
+.fs-small {
+	font-size: 1.5rem;
+}

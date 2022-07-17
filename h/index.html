@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>H</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="assets/favicon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="H" />
+    <link rel="apple-touch-icon-precomposed" href="assets/favicon.png">
+    <meta name="msapplication-TileImage" content="assets/favicon.png">
+    <meta name="msapplication-TileColor" content="#0e90d2">
+    <link rel="stylesheet" href="assets/css/amazeui.min.css">
+    <link rel="stylesheet" href="assets/css/until.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <meta name="referrer" content="never">
+</head>
+
+<body>
+    <input id="upload" class='inputstyle' type="file" accept=".json" onchange="parseFile(this)" />
+    <div id="toast" style="
+        position: fixed;
+        z-index: 9999;
+        right: 10px;
+        top: 10px;
+        min-width: 150px;">
+    </div>
+    <div id='tabs' data-am-widget="tabs" class="am-tabs am-tabs-default m-0">
+        <ul class="am-tabs-nav am-cf">
+            <li class="am-active"><a href="[data-tab-panel-list]">最新</a></li>
+            <li class=""><a href="[data-tab-panel-coll]">收藏</a></li>
+            <li class=""><a href="[data-tab-panel-setting]">设置</a></li>
+        </ul>
+        <div class="am-tabs-bd" style="height: calc(100vh - 60px);overflow-y: auto;">
+            <div class="ftb">
+                <a data-action="toTop" data-am-smooth-scroll title="回到顶部" class="am-icon-btn am-icon-arrow-up bg-danger hide" id="amz-go-top"></a>
+            </div>
+            <div data-tab-panel-list class="am-tab-panel  am-active">
+                <div id="video_list" class="mt-10">
+                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-1 am-avg-md-2 am-avg-lg-4 am-gallery-imgbordered">
+                        
+                    </ul>
+                </div>
+            </div>
+            <div data-tab-panel-coll class="am-tab-panel ">
+                <button type="button" data-action="coll" class="am-btn am-btn-danger am-btn-block">加载收藏</button>
+
+            </div>
+            <div data-tab-panel-setting class="am-tab-panel ">
+                <!-- <div class="am-g">
+                    <div class="am-u-sm-6">
+                        <h3>基础</h3>
+                        <label class="am-checkbox">
+                            <input data-change="config,debug" type="checkbox" value="" data-am-ucheck>调试
+                        </label>
+                    </div>
+                </div> -->
+                <div class="am-g">
+                    <h3>高级</h3>
+                    <button type="button" data-action="store_reset" class="am-btn am-btn-danger">删除数据</button>
+                    <button type="button" data-action="data_export" class="am-btn am-btn-success">导出数据</button>
+                    <button type="button" data-action="data_import" class="am-btn am-btn-warning">导入数据</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/until.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/lazyload.min.js"></script>.
+    <script src="assets/js/amazeui.min.js"></script>
+    <script src="assets/js/amazeui.widgets.helper.js"></script>
+    <script src="assets/js/menu.js"></script>
+    <script src="assets/js/helper.js"></script>
+    <script src="assets/js/collection.js"></script>
+    <script src="assets/js/index.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
