@@ -3,7 +3,7 @@ body {
     min-height: calc(100vh);
     -webkit-overflow-scrolling: touch;
     font-family: customFont, -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .show {
