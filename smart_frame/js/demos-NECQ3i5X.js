@@ -1,0 +1,1 @@
+const e="Demos",t="Element Plus",n="Form",o={title:"Project",about:"About",document:"Document",antdv:"Ant Design Vue Version","naive-ui":"Naive UI Version","element-plus":"Element Plus Version"},s={title:e,elementPlus:t,form:n,vben:o};export{s as default,t as elementPlus,n as form,e as title,o as vben};
